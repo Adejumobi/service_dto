@@ -14,10 +14,11 @@ use Illuminate\Support\Facades\Log;
 
 class StaffController extends Controller
 {
-    protected $staffService;
+    protected $staffService; //to make available StaffService without initiating it whenever you need it
 
     public function __construct(StaffService $staffService)
     {
+        //passing StaffService to this controller
         $this->staffService = $staffService;
     }
 
@@ -37,7 +38,7 @@ class StaffController extends Controller
     public function create(CreateStaffRequest $request)
     {
         try {
-            $staffDto = StaffDto::fromCreateStaffRequest($request);
+            $staffDto = StaffDto::fromCreateStaffRequest($request);  //StaffDto is used to ensure resuability of the Request 
             $staff = $this->staffService->createMethod($staffDto);
 
             $staff = new StaffResource($staff);
